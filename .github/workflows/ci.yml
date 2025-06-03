@@ -32,7 +32,9 @@ jobs:
         run: pnpm --recursive run lint
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform }}
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -84,4 +86,6 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false
+          projectPath: "./projects/com.gm112.edgar.editor"
+          tauriScript: "pnpm exec tauri"
           args: ${{ matrix.args }}
