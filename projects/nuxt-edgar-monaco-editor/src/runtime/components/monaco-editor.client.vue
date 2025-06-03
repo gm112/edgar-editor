@@ -1,37 +1,59 @@
 <script setup lang="ts">
 import * as monaco from 'monaco-editor'
 
+interface type_emits_edgar_editor {
+  (event: 'update:modelValue', value: string): void
+  (event: 'ready', editor: monaco.editor.IStandaloneCodeEditor): void
+}
+
+const emit = defineEmits<type_emits_edgar_editor>()
 const model_value = defineModel<string>()
 const is_loading = ref(true)
-const editor_element = shallowRef<monaco.editor.IStandaloneCodeEditor>()
-const editor_container_element = shallowRef<HTMLDivElement>()
+const editor_element = shallowRef<monaco.editor.IStandaloneCodeEditor>(null)
+const editor_container_element = shallowRef<HTMLDivElement>(null)
 let editor: monaco.editor.IStandaloneCodeEditor | undefined
 let model: monaco.editor.ITextModel | undefined
 
 watch(editor_element, (_, current) => {
   if (!editor_element.value || current) return
+  // FIXME: This is a hack to get the editor to work - we want to actually useTemplateRef instead of this watcher.
+  // if (current) {
+  //   if (editor) editor.dispose()
+  //   if (model) model.dispose()
+  // }
 
   editor = monaco.editor.create(editor_element.value!, { theme: 'vs-dark' })
   model = monaco.editor.createModel(model_value.value, 'markdown')
 
   editor.setModel(model)
+  editor.onDidChangeModelContent(() => {
+    emit('update:modelValue', editor.getValue())
+  })
+
   editor_element.value = editor
   is_loading.value = false
+  emit('ready', editor)
+})
+
+watch(model_value, (_, current) => {
+  editor?.setValue(current)
 })
 
 const observer = useResizeObserver(editor_container_element, (entries) => {
   const [entry] = entries
-  if (!entry)
+  if (!entry || !editor)
     return
 
   const { width, height } = entry.contentRect
-  if (editor) {
-    editor.layout({
-      width,
-      height,
-    })
-  }
+  editor.layout({
+    width,
+    height,
+  })
 }, { box: 'border-box' })
+
+defineExpose({
+  $editor: editor_element,
+})
 
 onBeforeUnmount(() => {
   editor?.dispose()
@@ -43,7 +65,7 @@ onBeforeUnmount(() => {
 <template>
   <div
     ref="editor_container_element"
-    class="size-full overflow-hidden"
+    style="height: 100%; width: 100%; overflow: hidden;"
   >
     <div ref="editor_element">
       <slot v-if="is_loading" />

@@ -1,4 +1,4 @@
 {
   "extends": "./.nuxt/tsconfig.json",
-  "exclude": ["dist", "node_modules", "playground", ".nuxt"]
+  "exclude": ["dist", "node_modules", "playground"]
 }

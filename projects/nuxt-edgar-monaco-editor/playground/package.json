@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "nuxt": "^3.17.4"
+  },
+  "devDependencies": {
+    "@vueuse/nuxt": "^13.3.0"
   }
 }

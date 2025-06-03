@@ -28,5 +28,9 @@ export default defineNuxtConfig({
     'nuxt-edgar-monaco-editor',
     '@vueuse/nuxt'
   ],
-  css: ['~/assets/css/main.css']
+  css: ['~/assets/css/main.css'],
+  workspaceDir: '../..',
+  typescript: {
+    includeWorkspace: true,
+  }
 })

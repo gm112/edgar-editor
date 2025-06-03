@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   modules: ['@vueuse/nuxt'],
   devtools: { enabled: true },
+  workspaceDir: '../..',
   sourcemap: true,
 
   future: {
@@ -8,4 +9,7 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-05-15',
+  typescript: {
+    includeWorkspace: true,
+  },
 })
