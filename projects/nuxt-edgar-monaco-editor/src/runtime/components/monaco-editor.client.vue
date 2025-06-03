@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// FIXME: Move this component to a separate package so that it can be used by standalone Vue projects.
 import * as monaco from 'monaco-editor'
 
 interface type_emits_edgar_editor {
@@ -8,9 +9,10 @@ interface type_emits_edgar_editor {
 
 const emit = defineEmits<type_emits_edgar_editor>()
 const model_value = defineModel<string>()
-const is_loading = ref(true)
-const editor_element = shallowRef<monaco.editor.IStandaloneCodeEditor>(null)
-const editor_container_element = shallowRef<HTMLDivElement>(null)
+const is_loading = shallowRef(true)
+const current_animation_frame_id = shallowRef<number | null>(null)
+const editor_element = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+const editor_container_element = shallowRef<HTMLDivElement | null>(null)
 let editor: monaco.editor.IStandaloneCodeEditor | undefined
 let model: monaco.editor.ITextModel | undefined
 
@@ -45,9 +47,14 @@ const observer = useResizeObserver(editor_container_element, (entries) => {
     return
 
   const { width, height } = entry.contentRect
-  editor.layout({
-    width,
-    height,
+  if (current_animation_frame_id.value)
+    cancelAnimationFrame(current_animation_frame_id.value)
+
+  current_animation_frame_id.value = requestAnimationFrame(() => {
+    editor.layout({
+      width,
+      height,
+    })
   })
 }, { box: 'border-box' })
 

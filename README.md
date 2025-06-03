@@ -16,3 +16,5 @@ The objective is to develop a simple editor that can be used to create a game pr
 - A plugin system that can be used to extend the editor with additional functionality
   - i.e. a plugin that adds a GBDK integration for Game Boy development.
 - Should provide source control integration for the game project, starting with Git.
+
+The editor should communicate with the tauri layer through websockets so that the nuxt side doesn't need to be aware of the tauri layer. We must support the web, too.
