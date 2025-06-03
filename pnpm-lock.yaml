@@ -47,6 +47,9 @@ importers:
       nuxt-edgar-monaco-editor:
         specifier: workspace:*
         version: link:../nuxt-edgar-monaco-editor
+      tailwindcss:
+        specifier: ^4.1.8
+        version: 4.1.8
       typescript:
         specifier: ^5.8.3
         version: 5.8.3

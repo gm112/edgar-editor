@@ -26,5 +26,6 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     '@nuxt/ui',
     'nuxt-edgar-monaco-editor'
-  ]
+  ],
+  css: ['~/assets/css/main.css']
 })

@@ -1,5 +1,5 @@
 <template>
-  <U-App>
-    <NuxtPage />
-  </U-App>
+  <u-app>
+    <nuxt-page />
+  </u-app>
 </template>
