@@ -2,6 +2,7 @@
   "name": "com.gm112.edgar.editor",
   "private": true,
   "type": "module",
+  "license": "BSD-3-Clause",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
