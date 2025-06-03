@@ -1,8 +1,13 @@
 <template>
-  <div>
-    Nuxt module playground!
-  </div>
+    <MonacoEditor class="container">
+      <p>Loading...</p>
+    </MonacoEditor>
 </template>
 
-<script setup>
-</script>
+<style lang="css" scoped>
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+}
+</style>

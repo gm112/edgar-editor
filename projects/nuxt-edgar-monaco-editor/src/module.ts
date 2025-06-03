@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { addCustomTab } from '@nuxt/devtools-kit'
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addComponentsDir } from '@nuxt/kit'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -13,11 +14,12 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'edgar',
   },
   // Default configuration options of the Nuxt module
-  defaults: {
-  },
+  defaults: {},
   setup(_options, nuxt) {
     const devtools_ui_route = '/__edgar-editor'
     const resolver = createResolver(import.meta.url)
+    const runtime_dir_path = fileURLToPath(new URL('./runtime', import.meta.url))
+
     const { resolve } = resolver
     const _is_production = existsSync(resolve('./runtime/plugin'))
     // TODO: Implement route for dev tools tab
@@ -42,6 +44,16 @@ export default defineNuxtModule<ModuleOptions>({
           src: devtools_ui_route,
         },
       })
+
+    nuxt.options.build.transpile.push(runtime_dir_path)
+    nuxt.options.build.transpile.push(asset =>
+      asset.isClient ? 'monaco-editor' : false,
+    )
+
+    addComponentsDir({
+      path: resolve('./runtime/components'),
+      global: true,
+    })
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
     addPlugin(resolve('./runtime/plugin'))
