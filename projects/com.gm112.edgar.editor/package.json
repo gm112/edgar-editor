@@ -4,7 +4,7 @@
   "type": "module",
   "license": "BSD-3-Clause",
   "scripts": {
-    "build": "nuxt build",
+    "build": "tauri build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

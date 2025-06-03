@@ -1,7 +1,7 @@
 <template>
-    <MonacoEditor class="container">
-      <p>Loading...</p>
-    </MonacoEditor>
+  <MonacoEditor class="container">
+    <p>Loading...</p>
+  </MonacoEditor>
 </template>
 
 <style lang="css" scoped>

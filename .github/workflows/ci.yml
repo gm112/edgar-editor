@@ -15,17 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-
-      - run: npm i -g --force corepack@latest && corepack enable
+          node-version: 'lts/*'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npx nypm@latest i
+        run: pnpm i --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: pnpm --recursive run lint
 
   test:
     runs-on: ubuntu-latest
@@ -33,17 +37,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-
-      - run: npm i -g --force corepack@latest && corepack enable
+          node-version: 'lts/*'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npx nypm@latest i
+        run: pnpm i --frozen-lockfile
 
       - name: Playground prepare
-        run: npm run dev:prepare
+        run: pnpm --recursive run dev:prepare
 
       - name: Test
-        run: npm run test
+        run: pnpm --recursive run test
