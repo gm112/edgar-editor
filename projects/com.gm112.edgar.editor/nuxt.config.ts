@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  compatibilityDate: '2025-05-15',
+  compatibilityDate: '2025-06-14',
   vite: {
     clearScreen: false,
     envPrefix: ['VITE_', 'TAURI_'],
@@ -41,4 +41,11 @@ export default defineNuxtConfig({
       },
     },
   },
+  content: {
+    experimental: {
+      nativeSqlite: true,
+      // @ts-expect-error - nuxt-content doesn't have types for this yet
+      native: true
+    }
+  }
 })
