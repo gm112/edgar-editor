@@ -1,22 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
-  future: {
-    compatibilityVersion: 4
-  },
-  devtools: { enabled: true },
-  ssr: false,
-  sourcemap: true,
-  devServer: {
-    host: process.env.TAURI_DEV_HOST ?? 'localhost',
-  },
-  vite: {
-    clearScreen: false,
-    envPrefix: ['VITE_', 'TAURI_'],
-    server: {
-      strictPort: true
-    }
-  },
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
@@ -26,11 +9,36 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     '@nuxt/ui',
     'nuxt-edgar-monaco-editor',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
   ],
+  ssr: false,
+  devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   workspaceDir: '../..',
+  sourcemap: true,
+  devServer: {
+    host: process.env.TAURI_DEV_HOST ?? 'localhost',
+  },
+  future: {
+    compatibilityVersion: 4,
+  },
+  compatibilityDate: '2025-05-15',
+  vite: {
+    clearScreen: false,
+    envPrefix: ['VITE_', 'TAURI_'],
+    server: {
+      strictPort: true,
+    },
+  },
   typescript: {
     includeWorkspace: true,
-  }
+  },
+  eslint: {
+    config: {
+      stylistic: {
+        semi: false,
+        quotes: 'single',
+      },
+    },
+  },
 })
